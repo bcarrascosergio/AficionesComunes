@@ -1,7 +1,6 @@
 package accesoDatos.ficheros;
-import java.util.*;
 
-public class UsuariosAficiones {
+public class EjercicioCooncordancias {
     static void main(String[] args) {
 
 
