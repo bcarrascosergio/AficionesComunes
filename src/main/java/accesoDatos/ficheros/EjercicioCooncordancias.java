@@ -1,6 +1,7 @@
 package accesoDatos.ficheros;
 
 import java.io.*;
+import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -16,12 +17,21 @@ public class EjercicioCooncordancias {
         Scanner teclado = new Scanner(System.in);
 
         System.out.println("Introduce tu nombre: ");
-        nombre = teclado.nextLine();
+        nombre = teclado.nextLine();//Pido el texto directamente por consola
 
-        System.out.printf("Buenas %s\n" +
-                "Introduce el nombre de tu fichero", nombre);
+        System.out.printf("Buenas %s.\n" +
+                          "Introduce el nombre de tu fichero: ", nombre);
         nombreFichero = teclado.nextLine();
-        nombreFichero.toString();
+        File fichero = new File(nombreFichero);
+
+        if (!fichero.exists()) {
+            System.out.println("Error, el fichero indicado no existe.");
+            return;
+        } else if (fichero.length() > maxBytes) {
+            System.out.printf("Error, el fichero supera el máximo de bytes permitido (%s bytes).", maxBytes);
+        } else {
+            System.out.println("El fichero se ha cargado correctamente.");
+        }
 
         do {
             System.out.println("========== MENÚ PRINCIPAL ==========");
@@ -32,7 +42,7 @@ public class EjercicioCooncordancias {
             System.out.println("====================================");
             System.out.println("Seleccione una opción: ");
 
-            opcion = teclado.nextInt();
+            opcion = Integer.parseInt(teclado.nextLine()); //Pido el numero int por consola y lee lo que escribe el usuario.
 
             switch (opcion) {
                 case 1:
@@ -72,7 +82,7 @@ public class EjercicioCooncordancias {
 
             }
 
-        } while (opcion != 3);
+        } while (opcion != 4);
         teclado.close();
 
 
@@ -81,11 +91,7 @@ public class EjercicioCooncordancias {
 
 
 
-
-
-        File file = new File(nombreFichero);
-
-        if (file.length() >= maxBytes) {
+        if (fichero.length() >= maxBytes) {
 
             System.out.printf("El fichero no se puede leer ni escribir porque supera los %d Bytes", maxBytes);
 
@@ -101,44 +107,36 @@ public class EjercicioCooncordancias {
 
             }
 
+            List<Usuario> usuarios = new ArrayList<>();
+
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader(nombreFichero))) {
 
                 String linea;
 
                 while ((linea = bufferedReader.readLine()) != null) {
 
-                    System.out.println(linea);
+                    String[] partes = linea.split(" ");
+                    String codigo = partes[0];
 
+                    List<String> aficiones = new ArrayList<>();
+                    for (int i = 1; i < partes.length; i++) {
+                        aficiones.add(partes[i]);
+                    }
+
+                    Usuario usuario = new Usuario(codigo, aficiones);
+                    usuarios.add(usuario);
                 }
 
-            } catch (FileNotFoundException e) {
-
-                throw new RuntimeException(e);
-
             } catch (IOException e) {
-
                 throw new RuntimeException(e);
 
             }
 
         }
-
     }
-
-    public void usuario() {
-
-        int codeUsuario = 0;
-        for (int i = 100; i <= codeUsuario ; i++) {
-
-        }
-
-        String codigoUsuario = "U100";
-        codigoUsuario.toUpperCase();
-
-
-    }
-
 }
+
+
 
 
 
