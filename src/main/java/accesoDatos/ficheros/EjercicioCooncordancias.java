@@ -49,6 +49,7 @@ public class EjercicioCooncordancias {
                     }
 
                 case 2:
+                    System.out.println("Estos son los usuarios que existen: ");
 
                 case 3:
 
