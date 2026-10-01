@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+//Hay que hacer que el usuario introduzca sus aficiones en una sola linea y que no tenga que estar escribiendo mucho
+
 public class EjercicioCooncordancias {
     static void main(String[] args) throws  InterruptedException {
 
@@ -20,7 +22,7 @@ public class EjercicioCooncordancias {
         nombre = teclado.nextLine();//Pido el texto directamente por consola
 
         System.out.printf("Buenas %s.\n" +
-                          "Introduce el nombre de tu fichero: ", nombre);
+                "Introduce el nombre de tu fichero: ", nombre);
         nombreFichero = teclado.nextLine();
         File fichero = new File(nombreFichero);
 
@@ -53,6 +55,30 @@ public class EjercicioCooncordancias {
                         throw new IllegalArgumentException("El usuario ya existe");
                     } else {
 
+                        List<Usuario> usuarios = new ArrayList<>();
+
+                        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(nombreFichero))) {
+
+                            String linea;
+
+                            while ((linea = bufferedReader.readLine()) != null) {
+
+                                String[] partes = linea.split(" ");
+                                String codigo = partes[0];
+
+                                List<String> aficiones = new ArrayList<>();
+                                for (int i = 1; i < partes.length; i++) {
+                                    aficiones.add(partes[i]);
+                                }
+
+                                Usuario usuario = new Usuario(codigo, aficiones);
+                                usuarios.add(usuario);
+                            }
+
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+
                         listaUsuarios.add(nuevoUsuario);
                         System.out.printf("El nuevo usuario es %s", nuevoUsuario);
                         break;
@@ -60,6 +86,10 @@ public class EjercicioCooncordancias {
 
                 case 2:
                     System.out.println("Estos son los usuarios que existen: ");
+                    for (int todosLosUsuarios = 1; listaUsuarios.contains(todosLosUsuarios); todosLosUsuarios++) {
+                        System.out.println(todosLosUsuarios);
+                    }
+
 
                 case 3:
 
@@ -107,6 +137,29 @@ public class EjercicioCooncordancias {
 
             }
 
+
+
+        }
+    }
+}
+
+/*
+* if (fichero.length() >= maxBytes) {
+
+            System.out.printf("El fichero no se puede leer ni escribir porque supera los %d Bytes", maxBytes);
+
+        } else {
+
+            try (FileWriter fileWriter = new FileWriter(nombreFichero, true)) {
+
+                fileWriter.write(teclado.nextLine());
+
+            } catch (Exception e) {
+
+                throw new RuntimeException(e);
+
+            }
+
             List<Usuario> usuarios = new ArrayList<>();
 
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader(nombreFichero))) {
@@ -130,14 +183,7 @@ public class EjercicioCooncordancias {
             } catch (IOException e) {
                 throw new RuntimeException(e);
 
-            }
-
-        }
-    }
-}
-
-
-
+            }*/
 
 
 
