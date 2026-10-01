@@ -68,7 +68,7 @@ public class EjercicioCooncordancias {
         do {
             System.out.println("========== MENÚ PRINCIPAL ==========");
             System.out.println("1. Añadir usuario");
-            System.out.println("2. Mostrar listaUsuarios introducidos");
+            System.out.println("2. Mostrar lista de usuarios introducidos");
             System.out.println("3. Generar fichero de concordancias");
             System.out.println("4. Salir");
             System.out.println("====================================");
